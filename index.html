@@ -1503,88 +1503,35 @@ function buildAdminGrid(
    Heat map color function
    ============================================================ */
 
-function heatColor(
-  count,
-  minCount,
-  maxCount
-) {
+function heatColor(count, minCount, maxCount) {
 
-  /*
-    Anything at or below the minimum
-    observed availability is white.
-
-    Example:
-      min = 2
-
-      0 -> white
-      1 -> white
-      2 -> white
-      3 -> green
-  */
-
-  if (
-    count <= minCount
-  ) {
-
+  // 0 available is always white.
+  if (count === 0) {
     return "#FFFFFF";
   }
 
-
-  /*
-    If every occupied slot has exactly
-    the same count, there is no range
-    to visualize.
-  */
-
-  if (
-    maxCount === minCount
-  ) {
-
-    return "#FFFFFF";
+  // If there is only one positive availability level,
+  // use the lightest green for it.
+  if (maxCount === minCount) {
+    return "#CDE1D8";
   }
 
-
-  /*
-    Scale between the observed minimum
-    and maximum.
-
-      min -> 0
-      max -> 1
-  */
-
+  // Scale positive counts:
+  // minCount -> lightest green
+  // maxCount -> darkest green
   const pct =
     (count - minCount) /
     (maxCount - minCount);
 
-
-  /*
-    Existing color palette:
-
-      white
-      light green
-      medium green
-      dark green
-      darkest green
-  */
-
   const stops = [
-
-    [250, 248, 243],
-
-    [205, 225, 216],
-
+    [205, 225, 216], // lightest green
     [143, 188, 169],
-
     [75, 139, 114],
-
-    [31, 92, 74]
+    [31, 92, 74]     // darkest green
   ];
 
-
   const scaled =
-    pct *
-    (stops.length - 1);
-
+    pct * (stops.length - 1);
 
   const idx =
     Math.min(
@@ -1592,29 +1539,17 @@ function heatColor(
       stops.length - 2
     );
 
-
   const frac =
     scaled - idx;
 
+  const a = stops[idx];
+  const b = stops[idx + 1];
 
-  const a =
-    stops[idx];
-
-
-  const b =
-    stops[idx + 1];
-
-
-  const rgb =
-    a.map(
-      (v, i) =>
-        Math.round(
-          v +
-          (b[i] - v) *
-          frac
-        )
-    );
-
+  const rgb = a.map((v, i) =>
+    Math.round(
+      v + (b[i] - v) * frac
+    )
+  );
 
   return `rgb(${rgb.join(",")})`;
 }
