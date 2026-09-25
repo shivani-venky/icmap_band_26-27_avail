@@ -639,8 +639,27 @@ function buildAdminGrid(responses) {
   });
 }
 
-function heatColor(pct) {
-  // interpolate between paper and forest
+function heatColor(count, minCount, maxCount) {
+
+  // Anything at or below the minimum observed availability
+  // is the lightest color (white).
+  if (count <= minCount) {
+    return "#FFFFFF";
+  }
+
+  // If all occupied slots have the same count,
+  // everything is white because there is no range to show.
+  if (maxCount === minCount) {
+    return "#FFFFFF";
+  }
+
+  // Scale counts between the observed minimum and maximum.
+  // minCount -> 0 (white)
+  // maxCount -> 1 (darkest green)
+  const pct =
+    (count - minCount) /
+    (maxCount - minCount);
+
   const stops = [
     [250, 248, 243],
     [205, 225, 216],
@@ -648,11 +667,28 @@ function heatColor(pct) {
     [75, 139, 114],
     [31, 92, 74]
   ];
-  const scaled = pct * (stops.length - 1);
-  const idx = Math.min(Math.floor(scaled), stops.length - 2);
-  const frac = scaled - idx;
-  const a = stops[idx], b = stops[idx + 1];
-  const rgb = a.map((v, i) => Math.round(v + (b[i] - v) * frac));
+
+  const scaled =
+    pct * (stops.length - 1);
+
+  const idx =
+    Math.min(
+      Math.floor(scaled),
+      stops.length - 2
+    );
+
+  const frac =
+    scaled - idx;
+
+  const a = stops[idx];
+  const b = stops[idx + 1];
+
+  const rgb = a.map((v, i) =>
+    Math.round(
+      v + (b[i] - v) * frac
+    )
+  );
+
   return `rgb(${rgb.join(",")})`;
 }
 
