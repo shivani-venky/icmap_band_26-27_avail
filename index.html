@@ -4,9 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WhenTewMeet</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&family=Righteous&display=swap" rel="stylesheet">
+
 <style>
   :root {
     --paper: #E8F1FB;
@@ -23,7 +25,11 @@
     --cell-selected-hover: #327057;
     --radius: 3px;
   }
-  * { box-sizing: border-box; }
+
+  * {
+    box-sizing: border-box;
+  }
+
   html, body {
     margin: 0;
     padding: 0;
@@ -32,14 +38,17 @@
     font-family: 'IBM Plex Sans', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
+
   body {
     min-height: 100vh;
     padding: clamp(20px, 5vw, 56px) 16px 80px;
   }
+
   .wrap {
     max-width: 880px;
     margin: 0 auto;
   }
+
   .masthead {
     border-bottom: 2px solid var(--ink);
     padding-bottom: 18px;
@@ -50,6 +59,7 @@
     gap: 16px;
     flex-wrap: wrap;
   }
+
   .masthead h1 {
     font-family: 'Righteous', cursive;
     font-weight: 400;
@@ -59,6 +69,7 @@
     line-height: 1.05;
     color: var(--continue-blue-dark);
   }
+
   .masthead .tagline {
     font-size: 14px;
     color: var(--ink-soft);
@@ -67,6 +78,7 @@
   }
 
   /* ---- Name step ---- */
+
   .name-card {
     background: #fff;
     border: 1px solid var(--ledger-line);
@@ -74,17 +86,20 @@
     padding: 28px;
     margin-bottom: 28px;
   }
+
   .name-card label {
     display: block;
     font-size: 13px;
     color: var(--ink-soft);
     margin-bottom: 8px;
   }
+
   .name-row {
     display: flex;
     gap: 12px;
     flex-wrap: wrap;
   }
+
   input[type="text"] {
     flex: 1 1 240px;
     font-family: inherit;
@@ -95,6 +110,7 @@
     background: var(--paper);
     color: var(--ink);
   }
+
   input[type="text"]:focus {
     outline: none;
     border-color: var(--forest);
@@ -111,24 +127,38 @@
     cursor: pointer;
     transition: background 0.15s ease, transform 0.1s ease;
   }
-  button:active { transform: scale(0.98); }
+
+  button:active {
+    transform: scale(0.98);
+  }
+
   .btn-primary {
     background: var(--continue-blue);
     color: #fff;
   }
-  .btn-primary:hover { background: var(--continue-blue-dark); }
+
+  .btn-primary:hover {
+    background: var(--continue-blue-dark);
+  }
+
   .btn-primary:disabled {
     background: #C9C6BC;
     cursor: not-allowed;
   }
+
   .btn-ghost {
     background: transparent;
     color: var(--ink-soft);
     border: 1.5px solid var(--ledger-line);
   }
-  .btn-ghost:hover { border-color: var(--ink-soft); color: var(--ink); }
+
+  .btn-ghost:hover {
+    border-color: var(--ink-soft);
+    color: var(--ink);
+  }
 
   /* ---- Instructions ---- */
+
   .fill-header-row {
     display: flex;
     justify-content: space-between;
@@ -136,13 +166,19 @@
     gap: 16px;
     margin-bottom: 18px;
   }
+
   .instructions {
     font-size: 13.5px;
     color: var(--ink-soft);
     margin: 0;
     line-height: 1.5;
   }
-  .instructions strong { color: var(--ink); font-weight: 600; }
+
+  .instructions strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
   .save-status {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 11px;
@@ -151,15 +187,23 @@
     opacity: 0;
     transition: opacity 0.25s ease;
   }
-  .save-status.visible { opacity: 1; }
-  .save-status.saved { color: var(--forest-dark); }
+
+  .save-status.visible {
+    opacity: 1;
+  }
+
+  .save-status.saved {
+    color: var(--forest-dark);
+  }
 
   /* ---- Grid ---- */
+
   .grid-container {
     display: grid;
     grid-template-columns: auto 1fr;
     row-gap: 3px;
   }
+
   .grid-box {
     border: 1px solid var(--ledger-line);
     border-radius: 6px;
@@ -167,20 +211,25 @@
     overflow: hidden;
     min-width: 0;
   }
+
   .grid-scroll {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
+
   table.grid {
     border-collapse: collapse;
     width: 100%;
     min-width: 280px;
     user-select: none;
   }
-  table.grid th, table.grid td {
+
+  table.grid th,
+  table.grid td {
     border: 1px solid var(--ledger-line);
     padding: 0;
   }
+
   table.grid thead th {
     background: var(--paper);
     font-family: 'IBM Plex Mono', monospace;
@@ -193,17 +242,22 @@
     letter-spacing: 0.02em;
   }
 
-  /* Time column: plain text sitting beside the grid, no box of its own */
+  /* Time column: plain text sitting beside the grid */
+
   table.time-table {
     border-collapse: collapse;
   }
-  table.time-table th, table.time-table td {
+
+  table.time-table th,
+  table.time-table td {
     border: none;
     padding: 0 10px 0 0;
   }
+
   table.time-table thead th {
     height: 34px;
   }
+
   .time-label {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 10.5px;
@@ -215,7 +269,12 @@
     box-sizing: border-box;
     transform: translateY(-7px);
   }
-  .time-label.hour-mark { color: var(--ink); font-weight: 500; }
+
+  .time-label.hour-mark {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
   .grid-end-label {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 10.5px;
@@ -227,6 +286,7 @@
     align-self: start;
     transform: translateY(-13px);
   }
+
   .slot-cell {
     width: 40px;
     height: 15px;
@@ -235,12 +295,22 @@
     transition: background 0.06s ease;
     box-sizing: border-box;
   }
+
   .slot-cell.hour-top {
     border-top: 1px solid var(--ledger-line);
   }
-  .slot-cell:hover { background: #EDEAE2; }
-  .slot-cell.selected { background: var(--cell-selected); }
-  .slot-cell.selected:hover { background: var(--cell-selected-hover); }
+
+  .slot-cell:hover {
+    background: #EDEAE2;
+  }
+
+  .slot-cell.selected {
+    background: var(--cell-selected);
+  }
+
+  .slot-cell.selected:hover {
+    background: var(--cell-selected-hover);
+  }
 
   .submit-row {
     margin-top: 22px;
@@ -249,9 +319,13 @@
     gap: 16px;
     flex-wrap: wrap;
   }
-  .hidden { display: none !important; }
+
+  .hidden {
+    display: none !important;
+  }
 
   /* ---- Admin / results view ---- */
+
   .legend {
     display: flex;
     align-items: center;
@@ -260,6 +334,7 @@
     color: var(--ink-soft);
     margin-bottom: 14px;
   }
+
   .legend-scale {
     display: flex;
     height: 12px;
@@ -268,7 +343,10 @@
     overflow: hidden;
     border: 1px solid var(--ledger-line);
   }
-  .legend-scale span { flex: 1; }
+
+  .legend-scale span {
+    flex: 1;
+  }
 
   .tooltip {
     position: fixed;
@@ -284,7 +362,10 @@
     opacity: 0;
     transition: opacity 0.1s ease;
   }
-  .tooltip.show { opacity: 1; }
+
+  .tooltip.show {
+    opacity: 1;
+  }
 
   .summary-strip {
     display: flex;
@@ -292,14 +373,17 @@
     margin-bottom: 18px;
     flex-wrap: wrap;
   }
+
   .summary-strip .stat {
     font-family: 'IBM Plex Mono', monospace;
   }
+
   .summary-strip .stat .n {
     font-size: 22px;
     color: var(--forest-dark);
     font-weight: 500;
   }
+
   .summary-strip .stat .label {
     font-size: 11px;
     color: var(--ink-soft);
@@ -315,6 +399,7 @@
   }
 </style>
 </head>
+
 <body>
 <div class="wrap">
 
@@ -323,7 +408,7 @@
   </div>
 
   <!-- STEP 1: name -->
-  <div class="name-card" id="nameStep">
+  <div class="name-card hidden" id="nameStep">
     <label for="nameInput">Name</label>
     <div class="name-row">
       <input type="text" id="nameInput" autocomplete="name">
@@ -334,18 +419,26 @@
   <!-- STEP 2: grid (fill mode) -->
   <div id="fillStep" class="hidden">
     <div class="fill-header-row">
-      <p class="instructions">Click and drag across boxes to mark yourself <strong>free</strong> during that time. Click a marked box to clear it.</p>
+      <p class="instructions">
+        Click and drag across boxes to mark yourself
+        <strong>free</strong> during that time.
+        Click a marked box to clear it.
+      </p>
       <span class="save-status" id="saveStatus"></span>
     </div>
+
     <div class="grid-container">
       <table class="time-table" id="fillTimes"></table>
+
       <div class="grid-box">
         <div class="grid-scroll">
           <table class="grid" id="fillGrid"></table>
         </div>
       </div>
+
       <div class="grid-end-label" id="fillEndLabel"></div>
     </div>
+
     <div class="submit-row">
       <button class="btn-ghost" id="backBtn">Change name</button>
     </div>
@@ -353,30 +446,39 @@
 
   <!-- ADMIN: results view -->
   <div id="adminStep" class="hidden">
+
     <div class="summary-strip" id="summaryStrip"></div>
+
     <div class="legend">
-      <span>Fewer free</span>
+      <span id="legendMin">0 Free</span>
+
       <span class="legend-scale">
-        <span style="background:#FAF8F3"></span>
-        <span style="background:#CDE1D8"></span>
-        <span style="background:#8FBCA9"></span>
-        <span style="background:#4B8B72"></span>
-        <span style="background:#1F5C4A"></span>
+        <span id="legend1"></span>
+        <span id="legend2"></span>
+        <span id="legend3"></span>
+        <span id="legend4"></span>
+        <span id="legend5"></span>
       </span>
-      <span>More free</span>
+
+      <span id="legendMax">0 Free</span>
     </div>
+
     <div class="grid-container">
       <table class="time-table" id="adminTimes"></table>
+
       <div class="grid-box">
         <div class="grid-scroll">
           <table class="grid" id="adminGrid"></table>
         </div>
       </div>
+
       <div class="grid-end-label" id="adminEndLabel"></div>
     </div>
   </div>
 
-  <div id="loadingStep" class="loading hidden">Loading…</div>
+  <div id="loadingStep" class="loading hidden">
+    Loading…
+  </div>
 
 </div>
 
@@ -386,290 +488,1103 @@
 /* ============================================================
    CONFIGURATION — edit these two lines for your club
    ============================================================ */
+
 const DOC_NAME = "WhenTewMeet";
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxD5woBVEXURO47az6ZRDSMbZhBQJ4rEdbOmTK0yUa_9RWEIfFOjV_0-CcBWFQkPZj_JQ/exec";
+
+const SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbxD5woBVEXURO47az6ZRDSMbZhBQJ4rEdbOmTK0yUa_9RWEIfFOjV_0-CcBWFQkPZj_JQ/exec";
+
 
 /* ============================================================
    Time / day setup — 9:00 AM to 10:00 PM, 30-min blocks
    ============================================================ */
-const DAYS = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
-const START_HOUR = 9;   // 9am
-const END_HOUR = 22;    // 10pm
-const SLOTS_PER_DAY = (END_HOUR - START_HOUR) * 2; // 26
+
+const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+const START_HOUR = 9;
+const END_HOUR = 22;
+
+const SLOTS_PER_DAY =
+  (END_HOUR - START_HOUR) * 2; // 26
+
 
 function slotLabel(i) {
-  const totalMin = START_HOUR * 60 + i * 30;
+  const totalMin =
+    START_HOUR * 60 + i * 30;
+
   let h = Math.floor(totalMin / 60);
   const m = totalMin % 60;
+
   const ampm = h >= 12 ? "PM" : "AM";
-  let h12 = h % 12; if (h12 === 0) h12 = 12;
+
+  let h12 = h % 12;
+
+  if (h12 === 0) {
+    h12 = 12;
+  }
+
   return `${h12}:${m === 0 ? "00" : m} ${ampm}`;
 }
-function slotKey(day, i) { return day + "_" + i; }
-const END_LABEL = slotLabel(SLOTS_PER_DAY); // the closing boundary, e.g. "10:00 PM"
+
+
+function slotKey(day, i) {
+  return day + "_" + i;
+}
+
+
+const END_LABEL =
+  slotLabel(SLOTS_PER_DAY);
+
 
 /* ============================================================
    Build the fill-in grid
    ============================================================ */
+
 const selected = new Set();
-let dragMode = null; // true = selecting, false = deselecting
+
+let dragMode = null;
+
 
 function buildFillGrid() {
-  const timesTable = document.getElementById("fillTimes");
-  const grid = document.getElementById("fillGrid");
 
-  let timesHtml = "<thead><tr><th></th></tr></thead><tbody>";
-  for (let i = 0; i < SLOTS_PER_DAY; i++) {
-    const isHour = i % 2 === 0;
-    timesHtml += `<tr><td class="time-label ${isHour ? 'hour-mark hour-top' : ''}">${isHour ? slotLabel(i) : ''}</td></tr>`;
+  const timesTable =
+    document.getElementById("fillTimes");
+
+  const grid =
+    document.getElementById("fillGrid");
+
+
+  let timesHtml =
+    "<thead><tr><th></th></tr></thead><tbody>";
+
+
+  for (
+    let i = 0;
+    i < SLOTS_PER_DAY;
+    i++
+  ) {
+
+    const isHour =
+      i % 2 === 0;
+
+    timesHtml += `
+      <tr>
+        <td class="time-label ${isHour ? "hour-mark hour-top" : ""}">
+          ${isHour ? slotLabel(i) : ""}
+        </td>
+      </tr>
+    `;
   }
-  timesHtml += "</tbody>";
-  timesTable.innerHTML = timesHtml;
-  document.getElementById("fillEndLabel").textContent = END_LABEL;
 
-  let html = "<thead><tr>";
-  DAYS.forEach(d => html += `<th>${d}</th>`);
-  html += "</tr></thead><tbody>";
-  for (let i = 0; i < SLOTS_PER_DAY; i++) {
-    const isHour = i % 2 === 0;
+
+  timesHtml += "</tbody>";
+
+  timesTable.innerHTML =
+    timesHtml;
+
+
+  document.getElementById(
+    "fillEndLabel"
+  ).textContent = END_LABEL;
+
+
+  let html =
+    "<thead><tr>";
+
+
+  DAYS.forEach(d => {
+    html += `<th>${d}</th>`;
+  });
+
+
+  html +=
+    "</tr></thead><tbody>";
+
+
+  for (
+    let i = 0;
+    i < SLOTS_PER_DAY;
+    i++
+  ) {
+
+    const isHour =
+      i % 2 === 0;
+
     html += "<tr>";
+
+
     DAYS.forEach(d => {
-      const key = slotKey(d, i);
-      html += `<td class="slot-cell ${isHour ? 'hour-top' : ''}" data-key="${key}"></td>`;
+
+      const key =
+        slotKey(d, i);
+
+      html += `
+        <td
+          class="slot-cell ${isHour ? "hour-top" : ""}"
+          data-key="${key}"
+        ></td>
+      `;
     });
+
+
     html += "</tr>";
   }
-  html += "</tbody>";
-  grid.innerHTML = html;
 
-  const cells = grid.querySelectorAll(".slot-cell");
+
+  html +=
+    "</tbody>";
+
+
+  grid.innerHTML =
+    html;
+
+
+  const cells =
+    grid.querySelectorAll(
+      ".slot-cell"
+    );
+
+
   let isDragging = false;
 
-  function toggle(cell, forceState) {
-    const key = cell.dataset.key;
-    const shouldSelect = forceState !== undefined ? forceState : !selected.has(key);
-    if (shouldSelect) { selected.add(key); cell.classList.add("selected"); }
-    else { selected.delete(key); cell.classList.remove("selected"); }
+
+  function toggle(
+    cell,
+    forceState
+  ) {
+
+    const key =
+      cell.dataset.key;
+
+    const shouldSelect =
+      forceState !== undefined
+        ? forceState
+        : !selected.has(key);
+
+
+    if (shouldSelect) {
+
+      selected.add(key);
+
+      cell.classList.add(
+        "selected"
+      );
+
+    } else {
+
+      selected.delete(key);
+
+      cell.classList.remove(
+        "selected"
+      );
+    }
+
+
     scheduleSave();
   }
 
+
   cells.forEach(cell => {
-    cell.addEventListener("mousedown", e => {
-      e.preventDefault();
-      isDragging = true;
-      dragMode = !selected.has(cell.dataset.key);
-      toggle(cell, dragMode);
-    });
-    cell.addEventListener("mouseenter", () => {
-      if (isDragging) toggle(cell, dragMode);
-    });
-    cell.addEventListener("touchstart", e => {
-      e.preventDefault();
-      isDragging = true;
-      dragMode = !selected.has(cell.dataset.key);
-      toggle(cell, dragMode);
-    }, {passive:false});
-    cell.addEventListener("touchmove", e => {
-      e.preventDefault();
-      const t = e.touches[0];
-      const el = document.elementFromPoint(t.clientX, t.clientY);
-      if (el && el.classList.contains("slot-cell")) toggle(el, dragMode);
-    }, {passive:false});
+
+    cell.addEventListener(
+      "mousedown",
+      e => {
+
+        e.preventDefault();
+
+        isDragging = true;
+
+        dragMode =
+          !selected.has(
+            cell.dataset.key
+          );
+
+        toggle(
+          cell,
+          dragMode
+        );
+      }
+    );
+
+
+    cell.addEventListener(
+      "mouseenter",
+      () => {
+
+        if (isDragging) {
+          toggle(
+            cell,
+            dragMode
+          );
+        }
+      }
+    );
+
+
+    cell.addEventListener(
+      "touchstart",
+      e => {
+
+        e.preventDefault();
+
+        isDragging = true;
+
+        dragMode =
+          !selected.has(
+            cell.dataset.key
+          );
+
+        toggle(
+          cell,
+          dragMode
+        );
+
+      },
+      { passive: false }
+    );
+
+
+    cell.addEventListener(
+      "touchmove",
+      e => {
+
+        e.preventDefault();
+
+        const t =
+          e.touches[0];
+
+        const el =
+          document.elementFromPoint(
+            t.clientX,
+            t.clientY
+          );
+
+        if (
+          el &&
+          el.classList.contains(
+            "slot-cell"
+          )
+        ) {
+
+          toggle(
+            el,
+            dragMode
+          );
+        }
+
+      },
+      { passive: false }
+    );
+
   });
-  document.addEventListener("mouseup", () => isDragging = false);
-  document.addEventListener("touchend", () => isDragging = false);
+
+
+  document.addEventListener(
+    "mouseup",
+    () => {
+      isDragging = false;
+    }
+  );
+
+
+  document.addEventListener(
+    "touchend",
+    () => {
+      isDragging = false;
+    }
+  );
 }
+
 
 /* ============================================================
-   Autosave — debounced, no submit button needed
+   Autosave — debounced
    ============================================================ */
+
 let saveTimer = null;
-const saveStatusEl = () => document.getElementById("saveStatus");
+
+
+const saveStatusEl = () =>
+  document.getElementById(
+    "saveStatus"
+  );
+
 
 function scheduleSave() {
-  const el = saveStatusEl();
-  el.textContent = "Saving…";
-  el.classList.remove("saved");
-  el.classList.add("visible");
-  clearTimeout(saveTimer);
-  saveTimer = setTimeout(commitSave, 500);
+
+  const el =
+    saveStatusEl();
+
+  el.textContent =
+    "Saving…";
+
+  el.classList.remove(
+    "saved"
+  );
+
+  el.classList.add(
+    "visible"
+  );
+
+
+  clearTimeout(
+    saveTimer
+  );
+
+
+  saveTimer =
+    setTimeout(
+      commitSave,
+      500
+    );
 }
 
+
 async function commitSave() {
-  const el = saveStatusEl();
+
+  const el =
+    saveStatusEl();
+
+
   try {
-    await fetch(SCRIPT_URL, {
-      method: "POST",
-      headers: { "Content-Type": "text/plain;charset=utf-8" }, // avoids CORS preflight with Apps Script
-      body: JSON.stringify({ name: currentName, slots: Array.from(selected) })
-    });
-    el.textContent = "Saved";
-    el.classList.add("saved");
+
+    await fetch(
+      SCRIPT_URL,
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type":
+            "text/plain;charset=utf-8"
+        },
+
+        body: JSON.stringify({
+          name: currentName,
+          slots:
+            Array.from(selected)
+        })
+      }
+    );
+
+
+    el.textContent =
+      "Saved";
+
+    el.classList.add(
+      "saved"
+    );
+
+
   } catch (err) {
-    console.error("Save error:", err);
-    el.textContent = "Couldn't save — check connection";
-    el.classList.remove("saved");
+
+    console.error(
+      "Save error:",
+      err
+    );
+
+    el.textContent =
+      "Couldn't save — check connection";
+
+    el.classList.remove(
+      "saved"
+    );
   }
 }
+
 
 /* ============================================================
    Step navigation
    ============================================================ */
+
 let currentName = "";
 
-document.getElementById("startBtn").addEventListener("click", async () => {
-  const val = document.getElementById("nameInput").value.trim();
-  if (!val) {
-    document.getElementById("nameInput").focus();
-    return;
-  }
-  currentName = val;
-  const btn = document.getElementById("startBtn");
-  btn.disabled = true;
-  btn.textContent = "Loading…";
-  await loadExisting(currentName);
-  btn.disabled = false;
-  btn.textContent = "Continue";
-  document.getElementById("nameStep").classList.add("hidden");
-  document.getElementById("fillStep").classList.remove("hidden");
-});
 
-// Looks up this person's own previously saved slots (if any) so
-// returning visitors see their earlier picks instead of a blank grid.
-// Only ever returns the one name's own data — never anyone else's.
+document.getElementById(
+  "startBtn"
+).addEventListener(
+  "click",
+  async () => {
+
+    const val =
+      document.getElementById(
+        "nameInput"
+      ).value.trim();
+
+
+    if (!val) {
+
+      document.getElementById(
+        "nameInput"
+      ).focus();
+
+      return;
+    }
+
+
+    currentName =
+      val;
+
+
+    const btn =
+      document.getElementById(
+        "startBtn"
+      );
+
+
+    btn.disabled = true;
+
+    btn.textContent =
+      "Loading…";
+
+
+    await loadExisting(
+      currentName
+    );
+
+
+    btn.disabled = false;
+
+    btn.textContent =
+      "Continue";
+
+
+    document.getElementById(
+      "nameStep"
+    ).classList.add(
+      "hidden"
+    );
+
+
+    document.getElementById(
+      "fillStep"
+    ).classList.remove(
+      "hidden"
+    );
+  }
+);
+
+
+/* ============================================================
+   Load existing response
+   ============================================================ */
+
 async function loadExisting(name) {
+
   selected.clear();
-  document.querySelectorAll("#fillGrid .slot-cell.selected").forEach(c => c.classList.remove("selected"));
-  const statusEl = saveStatusEl();
-  statusEl.classList.remove("visible", "saved");
+
+
+  document
+    .querySelectorAll(
+      "#fillGrid .slot-cell.selected"
+    )
+    .forEach(c =>
+      c.classList.remove(
+        "selected"
+      )
+    );
+
+
+  const statusEl =
+    saveStatusEl();
+
+
+  statusEl.classList.remove(
+    "visible",
+    "saved"
+  );
+
 
   try {
-    const res = await fetch(`${SCRIPT_URL}?name=${encodeURIComponent(name)}`);
-    const data = await res.json();
-    if (data && data.found && Array.isArray(data.slots)) {
-      data.slots.forEach(key => {
-        selected.add(key);
-        const cell = document.querySelector(`#fillGrid .slot-cell[data-key="${CSS.escape(key)}"]`);
-        if (cell) cell.classList.add("selected");
-      });
+
+    const res =
+      await fetch(
+        `${SCRIPT_URL}?name=${encodeURIComponent(name)}`
+      );
+
+
+    const data =
+      await res.json();
+
+
+    if (
+      data &&
+      data.found &&
+      Array.isArray(data.slots)
+    ) {
+
+      data.slots.forEach(
+        key => {
+
+          selected.add(
+            key
+          );
+
+
+          const cell =
+            document.querySelector(
+              `#fillGrid .slot-cell[data-key="${CSS.escape(key)}"]`
+            );
+
+
+          if (cell) {
+
+            cell.classList.add(
+              "selected"
+            );
+          }
+        }
+      );
     }
+
+
   } catch (err) {
-    console.error("Lookup error:", err);
-    // If the lookup fails, they just start from a blank grid — any
-    // further changes will still save normally.
+
+    console.error(
+      "Lookup error:",
+      err
+    );
+
   }
 }
 
-document.getElementById("backBtn").addEventListener("click", () => {
-  document.getElementById("fillStep").classList.add("hidden");
-  document.getElementById("nameStep").classList.remove("hidden");
-});
 
 /* ============================================================
-   Admin results view
+   Back button
    ============================================================ */
-function buildAdminGrid(responses) {
+
+document.getElementById(
+  "backBtn"
+).addEventListener(
+  "click",
+  () => {
+
+    document.getElementById(
+      "fillStep"
+    ).classList.add(
+      "hidden"
+    );
+
+
+    document.getElementById(
+      "nameStep"
+    ).classList.remove(
+      "hidden"
+    );
+  }
+);
+
+
+/* ============================================================
+   ADMIN RESULTS VIEW
+   ============================================================ */
+
+function buildAdminGrid(
+  responses
+) {
+
   const counts = {};
+
   const namesBySlot = {};
+
+
+  /* Initialize every slot */
+
   DAYS.forEach(d => {
-    for (let i = 0; i < SLOTS_PER_DAY; i++) {
-      const key = slotKey(d, i);
+
+    for (
+      let i = 0;
+      i < SLOTS_PER_DAY;
+      i++
+    ) {
+
+      const key =
+        slotKey(d, i);
+
       counts[key] = 0;
+
       namesBySlot[key] = [];
     }
   });
+
+
+  /* Count availability */
+
   responses.forEach(r => {
-    (r.slots || []).forEach(key => {
-      if (counts[key] !== undefined) {
-        counts[key]++;
-        namesBySlot[key].push(r.name);
+
+    (r.slots || []).forEach(
+      key => {
+
+        if (
+          counts[key] !== undefined
+        ) {
+
+          counts[key]++;
+
+          namesBySlot[key].push(
+            r.name
+          );
+        }
       }
-    });
+    );
   });
 
-  const total = responses.length || 1;
-  const timesTable = document.getElementById("adminTimes");
-  const table = document.getElementById("adminGrid");
 
-  let timesHtml = "<thead><tr><th></th></tr></thead><tbody>";
-  for (let i = 0; i < SLOTS_PER_DAY; i++) {
-    const isHour = i % 2 === 0;
-    timesHtml += `<tr><td class="time-label ${isHour ? 'hour-mark hour-top' : ''}">${isHour ? slotLabel(i) : ''}</td></tr>`;
+  /*
+    Find the minimum and maximum
+    NONZERO availability.
+
+    Example:
+      responses = 21
+      minimum = 2
+      maximum = 20
+
+    Then:
+      0 -> white
+      1 -> white
+      2 -> white
+      3 -> slightly green
+      ...
+      20 -> darkest green
+  */
+
+  const nonZeroCounts =
+    Object.values(counts)
+      .filter(n => n > 0);
+
+
+  const minCount =
+    nonZeroCounts.length
+      ? Math.min(
+          ...nonZeroCounts
+        )
+      : 0;
+
+
+  const maxCount =
+    nonZeroCounts.length
+      ? Math.max(
+          ...nonZeroCounts
+        )
+      : 0;
+
+
+  /* ==========================================================
+     Time labels
+     ========================================================== */
+
+  const timesTable =
+    document.getElementById(
+      "adminTimes"
+    );
+
+
+  const table =
+    document.getElementById(
+      "adminGrid"
+    );
+
+
+  let timesHtml =
+    "<thead><tr><th></th></tr></thead><tbody>";
+
+
+  for (
+    let i = 0;
+    i < SLOTS_PER_DAY;
+    i++
+  ) {
+
+    const isHour =
+      i % 2 === 0;
+
+
+    timesHtml += `
+      <tr>
+        <td class="time-label ${isHour ? "hour-mark hour-top" : ""}">
+          ${isHour ? slotLabel(i) : ""}
+        </td>
+      </tr>
+    `;
   }
-  timesHtml += "</tbody>";
-  timesTable.innerHTML = timesHtml;
 
-  let html = "<thead><tr>";
-  DAYS.forEach(d => html += `<th>${d}</th>`);
-  html += "</tr></thead><tbody>";
-  for (let i = 0; i < SLOTS_PER_DAY; i++) {
-    const isHour = i % 2 === 0;
+
+  timesHtml +=
+    "</tbody>";
+
+
+  timesTable.innerHTML =
+    timesHtml;
+
+
+  /* ==========================================================
+     Build heat map
+     ========================================================== */
+
+  let html =
+    "<thead><tr>";
+
+
+  DAYS.forEach(d => {
+
+    html +=
+      `<th>${d}</th>`;
+  });
+
+
+  html +=
+    "</tr></thead><tbody>";
+
+
+  for (
+    let i = 0;
+    i < SLOTS_PER_DAY;
+    i++
+  ) {
+
+    const isHour =
+      i % 2 === 0;
+
+
     html += "<tr>";
+
+
     DAYS.forEach(d => {
-      const key = slotKey(d, i);
-      const n = counts[key];
-      const pct = n / total;
-      const color = heatColor(pct);
-      html += `<td class="slot-cell ${isHour ? 'hour-top' : ''}" style="background:${color}" data-key="${key}" data-count="${n}"></td>`;
+
+      const key =
+        slotKey(d, i);
+
+
+      const n =
+        counts[key];
+
+
+      /*
+        IMPORTANT:
+        Pass the actual number of
+        available people into heatColor.
+      */
+
+      const color =
+        heatColor(
+          n,
+          minCount,
+          maxCount
+        );
+
+
+      html += `
+        <td
+          class="slot-cell ${isHour ? "hour-top" : ""}"
+          style="background:${color}"
+          data-key="${key}"
+          data-count="${n}"
+        ></td>
+      `;
     });
+
+
     html += "</tr>";
   }
-  html += "</tbody>";
-  table.innerHTML = html;
 
-  // Summary strip
-  const strip = document.getElementById("summaryStrip");
+
+  html +=
+    "</tbody>";
+
+
+  table.innerHTML =
+    html;
+
+
+  /* ==========================================================
+     Summary
+     ========================================================== */
+
+  const strip =
+    document.getElementById(
+      "summaryStrip"
+    );
+
+
   strip.innerHTML = `
-    <div class="stat"><div class="n">${responses.length}</div><div class="label">Responses</div></div>
+    <div class="stat">
+      <div class="n">
+        ${responses.length}
+      </div>
+
+      <div class="label">
+        Responses
+      </div>
+    </div>
   `;
 
-  // Tooltips
-  const tooltip = document.getElementById("tooltip");
-  table.querySelectorAll(".slot-cell").forEach(cell => {
-    cell.addEventListener("mousemove", e => {
-      const key = cell.dataset.key;
-      const names = namesBySlot[key];
-      if (!names.length) { tooltip.classList.remove("show"); return; }
-      tooltip.textContent = `${names.length} free: ${names.join(", ")}`;
-      tooltip.style.left = (e.clientX + 14) + "px";
-      tooltip.style.top = (e.clientY + 14) + "px";
-      tooltip.classList.add("show");
+
+  /* ==========================================================
+     Dynamic legend
+     ========================================================== */
+
+  const legendMin =
+    document.getElementById(
+      "legendMin"
+    );
+
+
+  const legendMax =
+    document.getElementById(
+      "legendMax"
+    );
+
+
+  if (
+    minCount > 0 &&
+    maxCount > 0
+  ) {
+
+    legendMin.textContent =
+      `${minCount}/${responses.length} Free`;
+
+    legendMax.textContent =
+      `${maxCount}/${responses.length} Free`;
+
+  } else {
+
+    legendMin.textContent =
+      "0 Free";
+
+    legendMax.textContent =
+      "0 Free";
+  }
+
+
+  /*
+    Make the five legend blocks
+    correspond to the actual range.
+  */
+
+  const legendColors = [
+
+    heatColor(
+      minCount,
+      minCount,
+      maxCount
+    ),
+
+    heatColor(
+      minCount +
+        (maxCount - minCount) * 0.25,
+      minCount,
+      maxCount
+    ),
+
+    heatColor(
+      minCount +
+        (maxCount - minCount) * 0.50,
+      minCount,
+      maxCount
+    ),
+
+    heatColor(
+      minCount +
+        (maxCount - minCount) * 0.75,
+      minCount,
+      maxCount
+    ),
+
+    heatColor(
+      maxCount,
+      minCount,
+      maxCount
+    )
+  ];
+
+
+  document.getElementById(
+    "legend1"
+  ).style.background =
+    legendColors[0];
+
+
+  document.getElementById(
+    "legend2"
+  ).style.background =
+    legendColors[1];
+
+
+  document.getElementById(
+    "legend3"
+  ).style.background =
+    legendColors[2];
+
+
+  document.getElementById(
+    "legend4"
+  ).style.background =
+    legendColors[3];
+
+
+  document.getElementById(
+    "legend5"
+  ).style.background =
+    legendColors[4];
+
+
+  /* ==========================================================
+     Tooltips
+     ========================================================== */
+
+  const tooltip =
+    document.getElementById(
+      "tooltip"
+    );
+
+
+  table
+    .querySelectorAll(
+      ".slot-cell"
+    )
+    .forEach(cell => {
+
+      cell.addEventListener(
+        "mousemove",
+        e => {
+
+          const key =
+            cell.dataset.key;
+
+
+          const names =
+            namesBySlot[key];
+
+
+          if (!names.length) {
+
+            tooltip.classList.remove(
+              "show"
+            );
+
+            return;
+          }
+
+
+          tooltip.textContent =
+            `${names.length} free: ${names.join(", ")}`;
+
+
+          tooltip.style.left =
+            (e.clientX + 14) +
+            "px";
+
+
+          tooltip.style.top =
+            (e.clientY + 14) +
+            "px";
+
+
+          tooltip.classList.add(
+            "show"
+          );
+        }
+      );
+
+
+      cell.addEventListener(
+        "mouseleave",
+        () => {
+
+          tooltip.classList.remove(
+            "show"
+          );
+        }
+      );
+
     });
-    cell.addEventListener("mouseleave", () => tooltip.classList.remove("show"));
-  });
 }
 
-function heatColor(count, minCount, maxCount) {
 
-  // Anything at or below the minimum observed availability
-  // is the lightest color (white).
-  if (count <= minCount) {
+/* ============================================================
+   Heat map color function
+   ============================================================ */
+
+function heatColor(
+  count,
+  minCount,
+  maxCount
+) {
+
+  /*
+    Anything at or below the minimum
+    observed availability is white.
+
+    Example:
+      min = 2
+
+      0 -> white
+      1 -> white
+      2 -> white
+      3 -> green
+  */
+
+  if (
+    count <= minCount
+  ) {
+
     return "#FFFFFF";
   }
 
-  // If all occupied slots have the same count,
-  // everything is white because there is no range to show.
-  if (maxCount === minCount) {
+
+  /*
+    If every occupied slot has exactly
+    the same count, there is no range
+    to visualize.
+  */
+
+  if (
+    maxCount === minCount
+  ) {
+
     return "#FFFFFF";
   }
 
-  // Scale counts between the observed minimum and maximum.
-  // minCount -> 0 (white)
-  // maxCount -> 1 (darkest green)
+
+  /*
+    Scale between the observed minimum
+    and maximum.
+
+      min -> 0
+      max -> 1
+  */
+
   const pct =
     (count - minCount) /
     (maxCount - minCount);
 
+
+  /*
+    Existing color palette:
+
+      white
+      light green
+      medium green
+      dark green
+      darkest green
+  */
+
   const stops = [
+
     [250, 248, 243],
+
     [205, 225, 216],
+
     [143, 188, 169],
+
     [75, 139, 114],
+
     [31, 92, 74]
   ];
 
+
   const scaled =
-    pct * (stops.length - 1);
+    pct *
+    (stops.length - 1);
+
 
   const idx =
     Math.min(
@@ -677,55 +1592,210 @@ function heatColor(count, minCount, maxCount) {
       stops.length - 2
     );
 
+
   const frac =
     scaled - idx;
 
-  const a = stops[idx];
-  const b = stops[idx + 1];
 
-  const rgb = a.map((v, i) =>
-    Math.round(
-      v + (b[i] - v) * frac
-    )
-  );
+  const a =
+    stops[idx];
+
+
+  const b =
+    stops[idx + 1];
+
+
+  const rgb =
+    a.map(
+      (v, i) =>
+        Math.round(
+          v +
+          (b[i] - v) *
+          frac
+        )
+    );
+
 
   return `rgb(${rgb.join(",")})`;
 }
 
+
 /* ============================================================
-   Entry point — decide fill vs admin, silently
+   ENTRY POINT
    ============================================================ */
+
 async function init() {
-  document.title = DOC_NAME;
-  document.getElementById("pageTitle").textContent = DOC_NAME;
 
-  const params = new URLSearchParams(window.location.search);
-  const code = params.get("admin");
+  document.title =
+    DOC_NAME;
 
-  if (code) {
-    document.getElementById("loadingStep").classList.remove("hidden");
+
+  document.getElementById(
+    "pageTitle"
+  ).textContent =
+    DOC_NAME;
+
+
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+
+  const code =
+    params.get("admin");
+
+
+  /*
+    IMPORTANT:
+    Hide all views first.
+
+    This prevents the name box from
+    flashing/showing in admin mode.
+  */
+
+  document.getElementById(
+    "nameStep"
+  ).classList.add(
+    "hidden"
+  );
+
+
+  document.getElementById(
+    "fillStep"
+  ).classList.add(
+    "hidden"
+  );
+
+
+  document.getElementById(
+    "adminStep"
+  ).classList.add(
+    "hidden"
+  );
+
+
+  /*
+    ADMIN MODE
+
+    If ?admin= exists, NEVER fall
+    back to the normal name form.
+  */
+
+  if (
+    code !== null
+  ) {
+
+    document.getElementById(
+      "loadingStep"
+    ).classList.remove(
+      "hidden"
+    );
+
+
     try {
-      const res = await fetch(`${SCRIPT_URL}?code=${encodeURIComponent(code)}`);
-      const data = await res.json();
-      document.getElementById("loadingStep").classList.add("hidden");
-      if (Array.isArray(data)) {
-        document.getElementById("adminStep").classList.remove("hidden");
-        buildAdminGrid(data);
+
+      const res =
+        await fetch(
+          `${SCRIPT_URL}?code=${encodeURIComponent(code)}`
+        );
+
+
+      const data =
+        await res.json();
+
+
+      document.getElementById(
+        "loadingStep"
+      ).classList.add(
+        "hidden"
+      );
+
+
+      if (
+        Array.isArray(data)
+      ) {
+
+        document.getElementById(
+          "adminStep"
+        ).classList.remove(
+          "hidden"
+        );
+
+
+        buildAdminGrid(
+          data
+        );
+
+
         return;
       }
-      // wrong code or server error — fall through to the normal form silently
+
+
+      /*
+        Admin parameter was provided,
+        but the code was invalid.
+      */
+
+      document.getElementById(
+        "loadingStep"
+      ).textContent =
+        "Invalid admin code.";
+
+
+      document.getElementById(
+        "loadingStep"
+      ).classList.remove(
+        "hidden"
+      );
+
+
+      return;
+
+
     } catch (err) {
-      document.getElementById("loadingStep").classList.add("hidden");
-      // fall through silently
+
+      console.error(
+        "Admin load error:",
+        err
+      );
+
+
+      document.getElementById(
+        "loadingStep"
+      ).textContent =
+        "Couldn't load admin results.";
+
+
+      document.getElementById(
+        "loadingStep"
+      ).classList.remove(
+        "hidden"
+      );
+
+
+      return;
     }
   }
 
-  // default: normal fill-out flow
+
+  /*
+    NORMAL MEMBER MODE
+  */
+
   buildFillGrid();
-  document.getElementById("nameStep").classList.remove("hidden");
+
+
+  document.getElementById(
+    "nameStep"
+  ).classList.remove(
+    "hidden"
+  );
 }
+
 
 init();
 </script>
+
 </body>
 </html>
