@@ -1129,41 +1129,21 @@ function buildAdminGrid(
 
 
   /*
-    Find the minimum and maximum
-    NONZERO availability.
-
-    Example:
-      responses = 21
-      minimum = 2
-      maximum = 20
-
-    Then:
-      0 -> white
-      1 -> white
-      2 -> white
-      3 -> slightly green
-      ...
-      20 -> darkest green
+  Find the minimum and maximum availability
+  across all slots, including zero.
   */
 
-  const nonZeroCounts =
-    Object.values(counts)
-      .filter(n => n > 0);
-
+  const allCounts =
+    Object.values(counts);
 
   const minCount =
-    nonZeroCounts.length
-      ? Math.min(
-          ...nonZeroCounts
-        )
+    allCounts.length
+      ? Math.min(...allCounts)
       : 0;
 
-
   const maxCount =
-    nonZeroCounts.length
-      ? Math.max(
-          ...nonZeroCounts
-        )
+    allCounts.length
+      ? Math.max(...allCounts)
       : 0;
 
 
@@ -1318,76 +1298,48 @@ function buildAdminGrid(
 
 
   /* ==========================================================
-     Dynamic legend
-     ========================================================== */
+   Dynamic legend
+   ========================================================== */
 
   const legendMin =
     document.getElementById(
       "legendMin"
     );
 
-
   const legendMax =
     document.getElementById(
       "legendMax"
     );
 
+  legendMin.textContent =
+    `${minCount}/${responses.length} Free`;
 
-  if (
-    minCount > 0 &&
-    maxCount > 0
-  ) {
-
-    legendMin.textContent =
-      `${minCount}/${responses.length} Free`;
-
-    legendMax.textContent =
-      `${maxCount}/${responses.length} Free`;
-
-  } else {
-
-    legendMin.textContent =
-      "0 Free";
-
-    legendMax.textContent =
-      "0 Free";
-  }
+  legendMax.textContent =
+    `${maxCount}/${responses.length} Free`;
 
 
   /*
-    Make the five legend blocks
-    correspond to the actual range.
+    Make the five legend blocks correspond
+    evenly to the actual availability range.
   */
 
   const legendColors = [
-
+    heatColor(minCount, minCount, maxCount),
     heatColor(
-      minCount,
+      minCount + (maxCount - minCount) * 0.25,
       minCount,
       maxCount
     ),
-
     heatColor(
-      minCount +
-        (maxCount - minCount) * 0.25,
+      minCount + (maxCount - minCount) * 0.50,
       minCount,
       maxCount
     ),
-
     heatColor(
-      minCount +
-        (maxCount - minCount) * 0.50,
+      minCount + (maxCount - minCount) * 0.75,
       minCount,
       maxCount
     ),
-
-    heatColor(
-      minCount +
-        (maxCount - minCount) * 0.75,
-      minCount,
-      maxCount
-    ),
-
     heatColor(
       maxCount,
       minCount,
@@ -1395,30 +1347,25 @@ function buildAdminGrid(
     )
   ];
 
-
   document.getElementById(
     "legend1"
   ).style.background =
     legendColors[0];
-
 
   document.getElementById(
     "legend2"
   ).style.background =
     legendColors[1];
 
-
   document.getElementById(
     "legend3"
   ).style.background =
     legendColors[2];
 
-
   document.getElementById(
     "legend4"
   ).style.background =
     legendColors[3];
-
 
   document.getElementById(
     "legend5"
@@ -1505,26 +1452,27 @@ function buildAdminGrid(
 
 function heatColor(count, minCount, maxCount) {
 
-  // 0 available is always white.
-  if (count === 0) {
+  // Minimum availability is always white.
+  if (count === minCount) {
     return "#FFFFFF";
   }
 
-  // If there is only one positive availability level,
-  // use the lightest green for it.
+  // If there is only one availability level,
+  // it is the minimum, so use white.
   if (maxCount === minCount) {
-    return "#CDE1D8";
+    return "#FFFFFF";
   }
 
-  // Scale positive counts:
-  // minCount -> lightest green
+  // Scale from:
+  // minCount -> white
   // maxCount -> darkest green
   const pct =
     (count - minCount) /
     (maxCount - minCount);
 
   const stops = [
-    [205, 225, 216], // lightest green
+    [255, 255, 255], // white
+    [205, 225, 216], // light green
     [143, 188, 169],
     [75, 139, 114],
     [31, 92, 74]     // darkest green
