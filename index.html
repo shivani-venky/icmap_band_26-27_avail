@@ -353,11 +353,11 @@
     background: var(--ink);
     color: #fff;
     font-size: 12.5px;
-    padding: 8px 11px;
+    padding: 10px 13px;
     border-radius: 4px;
     pointer-events: none;
-    max-width: 220px;
-    line-height: 1.4;
+    max-width: 260px;
+    line-height: 1.45;
     z-index: 50;
     opacity: 0;
     transition: opacity 0.1s ease;
@@ -365,6 +365,31 @@
 
   .tooltip.show {
     opacity: 1;
+  }
+
+  .tooltip-time {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    padding-bottom: 7px;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+  }
+
+  .tooltip-group {
+    margin-top: 5px;
+  }
+
+  .tooltip-group + .tooltip-group {
+    margin-top: 8px;
+  }
+
+  .tooltip-count {
+    font-weight: 600;
+  }
+
+  .tooltip-name {
+    margin-left: 2px;
   }
 
   .summary-strip {
@@ -524,6 +549,20 @@ function slotLabel(i) {
   }
 
   return `${h12}:${m === 0 ? "00" : m} ${ampm}`;
+}
+
+
+/*
+  Returns the full 30-minute range for a slot.
+
+  Example:
+  slot 0  -> 9:00 AM – 9:30 AM
+  slot 1  -> 9:30 AM – 10:00 AM
+  slot 25 -> 9:30 PM – 10:00 PM
+*/
+
+function slotTimeRange(i) {
+  return `${slotLabel(i)} – ${slotLabel(i + 1)}`;
 }
 
 
@@ -1257,6 +1296,7 @@ function buildAdminGrid(
           style="background:${color}"
           data-key="${key}"
           data-count="${n}"
+          data-slot-index="${i}"
         ></td>
       `;
     });
@@ -1298,8 +1338,8 @@ function buildAdminGrid(
 
 
   /* ==========================================================
-   Dynamic legend
-   ========================================================== */
+     Dynamic legend
+     ========================================================== */
 
   const legendMin =
     document.getElementById(
@@ -1325,27 +1365,32 @@ function buildAdminGrid(
 
   const legendColors = [
     heatColor(minCount, minCount, maxCount),
+
     heatColor(
       minCount + (maxCount - minCount) * 0.25,
       minCount,
       maxCount
     ),
+
     heatColor(
       minCount + (maxCount - minCount) * 0.50,
       minCount,
       maxCount
     ),
+
     heatColor(
       minCount + (maxCount - minCount) * 0.75,
       minCount,
       maxCount
     ),
+
     heatColor(
       maxCount,
       minCount,
       maxCount
     )
   ];
+
 
   document.getElementById(
     "legend1"
@@ -1397,23 +1442,121 @@ function buildAdminGrid(
             cell.dataset.key;
 
 
-          const names =
+          /*
+            Get the slot index so we can
+            display the full 30-minute range.
+          */
+
+          const slotIndex =
+            Number(
+              cell.dataset.slotIndex
+            );
+
+
+          const timeRange =
+            slotTimeRange(
+              slotIndex
+            );
+
+
+          /*
+            These are the people who are
+            free during this slot.
+          */
+
+          const freeNames =
             namesBySlot[key];
 
 
-          if (!names.length) {
+          /*
+            Everyone who submitted a response
+            but is NOT in the free list is
+            unavailable during this slot.
+          */
 
-            tooltip.classList.remove(
-              "show"
+          const freeNameSet =
+            new Set(
+              freeNames
             );
 
-            return;
+
+          const notFreeNames =
+            responses
+              .map(r => r.name)
+              .filter(
+                name =>
+                  !freeNameSet.has(name)
+              );
+
+
+          /*
+            Build the popup.
+          */
+
+          let popupHtml = `
+            <div class="tooltip-time">
+              ${timeRange}
+            </div>
+
+            <div class="tooltip-group">
+              <span class="tooltip-count">
+                ${freeNames.length} free:
+              </span>
+          `;
+
+
+          if (
+            freeNames.length
+          ) {
+
+            popupHtml +=
+              freeNames
+                .map(
+                  name =>
+                    `<div class="tooltip-name">${escapeHtml(name)}</div>`
+                )
+                .join("");
+
           }
 
 
-          tooltip.textContent =
-            `${names.length} free: ${names.join(", ")}`;
+          popupHtml += `
+            </div>
 
+            <div class="tooltip-group">
+              <span class="tooltip-count">
+                ${notFreeNames.length} not free:
+              </span>
+          `;
+
+
+          if (
+            notFreeNames.length
+          ) {
+
+            popupHtml +=
+              notFreeNames
+                .map(
+                  name =>
+                    `<div class="tooltip-name">${escapeHtml(name)}</div>`
+                )
+                .join("");
+
+          }
+
+
+          popupHtml +=
+            "</div>";
+
+
+          tooltip.innerHTML =
+            popupHtml;
+
+
+          /*
+            Keep the popup next to
+            the cursor.
+          */
 
           tooltip.style.left =
             (e.clientX + 14) +
@@ -1443,6 +1586,36 @@ function buildAdminGrid(
       );
 
     });
+}
+
+
+/* ============================================================
+   Escape names before inserting them into tooltip HTML
+   ============================================================ */
+
+function escapeHtml(value) {
+
+  return String(value)
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
+    );
 }
 
 
