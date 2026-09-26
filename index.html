@@ -1558,14 +1558,30 @@ function buildAdminGrid(
             the cursor.
           */
 
-          tooltip.style.left =
-            (e.clientX + 14) +
-            "px";
+          const offset = 14;
 
+          const tooltipWidth = tooltip.offsetWidth;
+          const tooltipHeight = tooltip.offsetHeight;
 
-          tooltip.style.top =
-            (e.clientY + 14) +
-            "px";
+          let left = e.clientX + offset;
+          let top = e.clientY + offset;
+
+          // Flip left if the tooltip would go off the right edge
+          if (left + tooltipWidth > window.innerWidth - 8) {
+            left = e.clientX - tooltipWidth - offset;
+          }
+
+          // Flip above if the tooltip would go off the bottom edge
+          if (top + tooltipHeight > window.innerHeight - 8) {
+            top = e.clientY - tooltipHeight - offset;
+          }
+
+          // Keep it inside the viewport
+          left = Math.max(8, left);
+          top = Math.max(8, top);
+
+          tooltip.style.left = left + "px";
+          tooltip.style.top = top + "px";
 
 
           tooltip.classList.add(
